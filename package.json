@@ -1,0 +1,31 @@
+{
+  "name": "scale-recipe-react",
+  "version": "1.0.0",
+  "description": "Scaling a recipe up/down with React.",
+  "main": "index.js",
+  "dependencies": {
+    "babel-preset-react": "^6.11.1",
+    "babelify": "^7.3.0",
+    "react": "^15.3.0",
+    "react-dom": "^15.3.0"
+  },
+  "devDependencies": {
+    "babel-preset-react": "^6.11.1",
+    "babelify": "^7.3.0",
+    "react": "^15.3.0",
+    "react-dom": "^15.3.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rviscomi/scale-recipe-react.git"
+  },
+  "author": "Rick Viscomi (rviscomi@gmail.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rviscomi/scale-recipe-react/issues"
+  },
+  "homepage": "https://github.com/rviscomi/scale-recipe-react#readme"
+}
