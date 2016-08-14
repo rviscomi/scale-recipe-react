@@ -13,7 +13,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "browserify -t [ babelify ] js/recipe.js -o dist/recipe.js"
+    "build": "browserify -t [ babelify ] js/recipe.js -o dist/recipe.js",
+    "deploy": "git subtree push --prefix dist origin gh-pages"
   },
   "devDependencies": {
     "babel-preset-react": "^6.11.1",
