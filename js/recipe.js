@@ -32,9 +32,7 @@ const Recipe = React.createClass({
   render: function() {
     return (
       <section>
-        <h1>
-          {this.props.name}
-        </h1>
+        <h1>{this.props.name}</h1>
         <h2>
           Serves
           <input
