@@ -2,36 +2,31 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 
 const RECIPES = [{
+  id: 'pasta-dough',
   name: 'Pasta Dough',
   serves: 4,
   ingredients: [
-    ['4', 'eggs'],
-    ['4', 'cups', 'flour'],
-    ['1/4', 'cup', 'olive oil'],
-    ['1', 'tablespoon', 'salt']
+    {quantity: '4', unit: 'eggs'},
+    {quantity: '4', unit: 'cups', item: 'flour'},
+    {quantity: '0.25', unit: 'cup', item: 'olive oil'},
+    {quantity: '1', unit: 'tablespoon', item: 'salt'}
   ]
 }];
 
-const Recipes = React.createClass({
-  render: function() {
-    return (
-      <div>
-        {RECIPES.map(recipe => <Recipe key={recipe.name} {...recipe}/>)}
-      </div>
-    );
-  }
-});
+const cloneObject = o => JSON.parse(JSON.stringify(o));
 
 const Recipe = React.createClass({
   getInitialState: function() {
     return {
       serves: this.props.serves,
-      ingredients: this.props.ingredients
+      scale: 1
     };
   },
   onChange: function(e) {
+    const serves = Math.abs(e.target.value);
     this.setState({
-      serves: e.target.value
+      serves: serves,
+      scale: serves / this.props.serves
     });
   },
   render: function() {
@@ -45,7 +40,7 @@ const Recipe = React.createClass({
             step={this.props.serves/4}
             onChange={this.onChange} />
         </h1>
-        <Ingredients ingredients={this.state.ingredients} />
+        <Ingredients ingredients={this.props.ingredients} scale={this.state.scale} />
       </section>
     );
   }
@@ -55,10 +50,8 @@ const Ingredients = React.createClass({
   render: function() {
     return (
       <ul>
-        {this.props.ingredients.map(([quantity, unit, item]) =>
-          <Ingredient
-            key={`${quantity} ${unit} ${item}`}
-            quantity={quantity} unit={unit} item={item} />
+        {this.props.ingredients.map((ingredient, i) =>
+          <Ingredient key={i} scale={this.props.scale} {...ingredient} />
         )}
       </ul>
     );
@@ -68,12 +61,13 @@ const Ingredients = React.createClass({
 const Ingredient = React.createClass({
   render: function() {
     return(
-      <li>{this.props.quantity} {this.props.unit} {this.props.item}</li>
+      <li>{this.props.quantity * this.props.scale} {this.props.unit} {this.props.item}</li>
     );
   }
 });
 
-ReactDOM.render(
-  <Recipes/>,
-  document.getElementById('recipes')
-);
+RECIPES.forEach((recipe, i) => {
+  ReactDOM.render(
+    <Recipe key={recipe.id} index={i} {...recipe}/>,
+    document.getElementById(recipe.id));
+});
