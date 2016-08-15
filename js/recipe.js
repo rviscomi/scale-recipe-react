@@ -1,5 +1,7 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
+const Quantity = require('./quantity.js');
+const Measurement = require('./measurement.js');
 
 const RECIPES = [{
   id: 'pasta-dough',
@@ -8,12 +10,10 @@ const RECIPES = [{
   ingredients: [
     {quantity: '4', unit: 'eggs'},
     {quantity: '4', unit: 'cups', item: 'flour'},
-    {quantity: '0.25', unit: 'cup', item: 'olive oil'},
+    {quantity: '1/4', unit: 'cup', item: 'olive oil'},
     {quantity: '1', unit: 'tablespoon', item: 'salt'}
   ]
 }];
-
-const cloneObject = o => JSON.parse(JSON.stringify(o));
 
 const Recipe = React.createClass({
   getInitialState: function() {
@@ -60,8 +60,11 @@ const Ingredients = React.createClass({
 
 const Ingredient = React.createClass({
   render: function() {
+    const quantity = new Quantity(this.props.quantity).multiply(this.props.scale);
+    const unit = this.props.unit;
+    const measurement = new Measurement(quantity, unit).convertUnits();
     return(
-      <li>{this.props.quantity * this.props.scale} {this.props.unit} {this.props.item}</li>
+      <li>{measurement.toString()} {this.props.item}</li>
     );
   }
 });
