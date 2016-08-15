@@ -34,12 +34,15 @@ const Recipe = React.createClass({
       <section>
         <h1>
           {this.props.name}
+        </h1>
+        <h2>
+          Serves
           <input
             type="number" min="0"
             value={this.state.serves}
             step={this.props.serves/4}
             onChange={this.onChange} />
-        </h1>
+        </h2>
         <Ingredients ingredients={this.props.ingredients} scale={this.state.scale} />
       </section>
     );

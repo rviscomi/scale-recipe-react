@@ -350,7 +350,12 @@ const Recipe = React.createClass({
       React.createElement(
         'h1',
         null,
-        this.props.name,
+        this.props.name
+      ),
+      React.createElement(
+        'h2',
+        null,
+        'Serves',
         React.createElement('input', {
           type: 'number', min: '0',
           value: this.state.serves,
