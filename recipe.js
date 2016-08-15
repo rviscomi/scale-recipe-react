@@ -5,22 +5,13 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 
 const RECIPES = [{
+  id: 'pasta-dough',
   name: 'Pasta Dough',
   serves: 4,
-  ingredients: [['4', 'eggs'], ['4', 'cups', 'flour'], ['1/4', 'cup', 'olive oil'], ['1', 'tablespoon', 'salt']]
+  ingredients: [{ quantity: '4', unit: 'eggs' }, { quantity: '4', unit: 'cups', item: 'flour' }, { quantity: '0.25', unit: 'cup', item: 'olive oil' }, { quantity: '1', unit: 'tablespoon', item: 'salt' }]
 }];
 
-const Recipes = React.createClass({
-  displayName: 'Recipes',
-
-  render: function () {
-    return React.createElement(
-      'div',
-      null,
-      RECIPES.map(recipe => React.createElement(Recipe, _extends({ key: recipe.name }, recipe)))
-    );
-  }
-});
+const cloneObject = o => JSON.parse(JSON.stringify(o));
 
 const Recipe = React.createClass({
   displayName: 'Recipe',
@@ -28,12 +19,14 @@ const Recipe = React.createClass({
   getInitialState: function () {
     return {
       serves: this.props.serves,
-      ingredients: this.props.ingredients
+      scale: 1
     };
   },
   onChange: function (e) {
+    const serves = Math.abs(e.target.value);
     this.setState({
-      serves: e.target.value
+      serves: serves,
+      scale: serves / this.props.serves
     });
   },
   render: function () {
@@ -50,7 +43,7 @@ const Recipe = React.createClass({
           step: this.props.serves / 4,
           onChange: this.onChange })
       ),
-      React.createElement(Ingredients, { ingredients: this.state.ingredients })
+      React.createElement(Ingredients, { ingredients: this.props.ingredients, scale: this.state.scale })
     );
   }
 });
@@ -62,9 +55,7 @@ const Ingredients = React.createClass({
     return React.createElement(
       'ul',
       null,
-      this.props.ingredients.map(([quantity, unit, item]) => React.createElement(Ingredient, {
-        key: `${ quantity } ${ unit } ${ item }`,
-        quantity: quantity, unit: unit, item: item }))
+      this.props.ingredients.map((ingredient, i) => React.createElement(Ingredient, _extends({ key: i, scale: this.props.scale }, ingredient)))
     );
   }
 });
@@ -76,7 +67,7 @@ const Ingredient = React.createClass({
     return React.createElement(
       'li',
       null,
-      this.props.quantity,
+      this.props.quantity * this.props.scale,
       ' ',
       this.props.unit,
       ' ',
@@ -85,7 +76,9 @@ const Ingredient = React.createClass({
   }
 });
 
-ReactDOM.render(React.createElement(Recipes, null), document.getElementById('recipes'));
+RECIPES.forEach((recipe, i) => {
+  ReactDOM.render(React.createElement(Recipe, _extends({ key: recipe.id, index: i }, recipe)), document.getElementById(recipe.id));
+});
 
 },{"react":174,"react-dom":2}],2:[function(require,module,exports){
 'use strict';
