@@ -1,0 +1,17 @@
+body {
+  font: 14px 'Roboto', sans-serif;
+}
+
+h1 {
+  font: bold 36px 'Indie Flower', cursive;
+}
+
+h2 {
+  font: 24px 'Indie Flower', cursive;
+}
+
+h2 input {
+  margin-left: 10px;
+  width: 50px;
+  font-size: 24px;
+}
