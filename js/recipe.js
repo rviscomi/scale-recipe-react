@@ -23,7 +23,7 @@ const Recipe = React.createClass({
     };
   },
   onChange: function(e) {
-    const serves = Math.abs(e.target.value);
+    const serves = Math.floor(Math.abs(e.target.value));
     this.setState({
       serves: serves,
       scale: serves / this.props.serves
@@ -38,7 +38,8 @@ const Recipe = React.createClass({
           <input
             type="number" min="0"
             value={this.state.serves}
-            step={this.props.serves/4}
+            /* TODO: Smarter default step. */
+            step={this.props.serves / 4}
             onChange={this.onChange} />
         </h2>
         <Ingredients ingredients={this.props.ingredients} scale={this.state.scale} />
