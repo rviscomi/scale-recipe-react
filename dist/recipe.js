@@ -400,6 +400,8 @@ RECIPES.forEach((recipe, i) => {
   ReactDOM.render(React.createElement(Recipe, _extends({ key: recipe.id, index: i }, recipe)), document.getElementById(recipe.id));
 });
 
+document.querySelector('h2 input').focus();
+
 },{"./measurement.js":1,"./quantity.js":2,"react":176,"react-dom":4}],4:[function(require,module,exports){
 'use strict';
 

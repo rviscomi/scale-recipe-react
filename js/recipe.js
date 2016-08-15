@@ -75,3 +75,5 @@ RECIPES.forEach((recipe, i) => {
     <Recipe key={recipe.id} index={i} {...recipe}/>,
     document.getElementById(recipe.id));
 });
+
+document.querySelector('h2 input').focus();
