@@ -1,12 +1,91 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var React = require('react');
-var ReactDOM = require('react-dom');
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-ReactDOM.render(React.createElement(
-  'h1',
-  null,
-  'Hello, world!'
-), document.getElementById('example'));
+const React = require('react');
+const ReactDOM = require('react-dom');
+
+const RECIPES = [{
+  name: 'Pasta Dough',
+  serves: 4,
+  ingredients: [['4', 'eggs'], ['4', 'cups', 'flour'], ['1/4', 'cup', 'olive oil'], ['1', 'tablespoon', 'salt']]
+}];
+
+const Recipes = React.createClass({
+  displayName: 'Recipes',
+
+  render: function () {
+    return React.createElement(
+      'div',
+      null,
+      RECIPES.map(recipe => React.createElement(Recipe, _extends({ key: recipe.name }, recipe)))
+    );
+  }
+});
+
+const Recipe = React.createClass({
+  displayName: 'Recipe',
+
+  getInitialState: function () {
+    return {
+      serves: this.props.serves,
+      ingredients: this.props.ingredients
+    };
+  },
+  onChange: function (e) {
+    this.setState({
+      serves: e.target.value
+    });
+  },
+  render: function () {
+    return React.createElement(
+      'section',
+      null,
+      React.createElement(
+        'h1',
+        null,
+        this.props.name,
+        React.createElement('input', {
+          type: 'number', min: '0',
+          value: this.state.serves,
+          step: this.props.serves / 4,
+          onChange: this.onChange })
+      ),
+      React.createElement(Ingredients, { ingredients: this.state.ingredients })
+    );
+  }
+});
+
+const Ingredients = React.createClass({
+  displayName: 'Ingredients',
+
+  render: function () {
+    return React.createElement(
+      'ul',
+      null,
+      this.props.ingredients.map(([quantity, unit, item]) => React.createElement(Ingredient, {
+        key: `${ quantity } ${ unit } ${ item }`,
+        quantity: quantity, unit: unit, item: item }))
+    );
+  }
+});
+
+const Ingredient = React.createClass({
+  displayName: 'Ingredient',
+
+  render: function () {
+    return React.createElement(
+      'li',
+      null,
+      this.props.quantity,
+      ' ',
+      this.props.unit,
+      ' ',
+      this.props.item
+    );
+  }
+});
+
+ReactDOM.render(React.createElement(Recipes, null), document.getElementById('recipes'));
 
 },{"react":174,"react-dom":2}],2:[function(require,module,exports){
 'use strict';
