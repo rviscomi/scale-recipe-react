@@ -14,12 +14,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "browserify -t [ babelify ] js/recipe.js -o dist/recipe.js",
-    "deploy": "git subtree push --prefix dist origin gh-pages"
+    "deploy": "git subtree push --prefix dist origin gh-pages",
+    "watch": "watchify -t [ babelify ] js/recipe.js -o dist/recipe.js"
   },
   "devDependencies": {
     "babel-preset-react": "^6.11.1",
     "babelify": "^7.3.0",
     "react": "^15.3.0",
-    "react-dom": "^15.3.0"
+    "react-dom": "^15.3.0",
+    "watchify": "^3.7.0"
   }
 }
