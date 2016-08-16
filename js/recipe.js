@@ -16,6 +16,19 @@ const RECIPES = [{
 }];
 
 const Recipe = React.createClass({
+  statics: {
+    /**
+     * Calculate a natural amount to step each change in serving size.
+     * Equivalent to the largest factor <= the square root of the serving size.
+     */
+    getStep: (serves) => {
+      let sqrt = Math.floor(Math.sqrt(serves));
+      while (serves % sqrt) {
+        sqrt--;
+      }
+      return sqrt;
+    }
+  },
   getInitialState: function() {
     return {
       serves: this.props.serves,
@@ -38,8 +51,7 @@ const Recipe = React.createClass({
           <input
             type="number" min="0"
             value={this.state.serves}
-            /* TODO: Smarter default step. */
-            step={this.props.serves / 4}
+            step={Recipe.getStep(this.props.serves)}
             onChange={this.onChange} />
         </h2>
         <Ingredients ingredients={this.props.ingredients} scale={this.state.scale} />
